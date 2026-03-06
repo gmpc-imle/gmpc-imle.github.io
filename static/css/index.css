@@ -749,5 +749,15 @@ a:focus {
   }
 }
 
+.video-square {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  max-width: 260px;
+  margin: 0 auto;
+}
 
-
+@media screen and (max-width: 768px) {
+  .video-square {
+    max-width: 100%;
+  }
+}
