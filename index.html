@@ -774,7 +774,7 @@
       <div class="column is-two-thirds">
         <div class="content has-text-justified">
           <p>
-            The planner is trained using real world human pedestrian data (ETH and UCY) to generate socially compliant navigation behaviors.
+            The planner is trained using real-world human pedestrian data (ETH and UCY) to generate socially compliant navigation behaviors.
             We deploy the system on the Robotnik RB-1 mobile robot navigating among pedestrians in a shared indoor environment,
             where trajectories are generated and evaluated in real time.
           </p>
@@ -788,12 +788,24 @@
 <section class="section">
   <div class="container is-max-desktop">
 
-    <h2 class="title is-3 has-text-centered">Navigation Under Increased Dynamics Mismatch</h2>
+    <h2 class="title is-3 has-text-centered">Navigation Under Platform Differences</h2>
     <div class="columns is-centered">
       <div class="column is-four-fifths">
         <div class="content has-text-justified">
           <p>
-            We further evaluate the planner on a TurtleBot2 platform, which has lower maximum velocity and acceleration than the Robotnik RB-1 used above. Because the planner is trained on human trajectory data, the resulting plans can be more dynamic than the TurtleBot2 can accurately execute, introducing a larger mismatch between the planning model and the robot’s true dynamics.
+          We further evaluate the <b>same planner</b> on a TurtleBot2 platform,
+          which has more limited acceleration and turning capability than the
+          Robotnik RB-1 used above. Because the planner is trained on human
+          trajectory data, the generated plans can be more dynamic than the
+          TurtleBot2 can accurately execute, introducing a more signifacant mismatch between
+          the planned trajectories and the robot’s true dynamics during execution.
+          </p>
+
+          <p>
+          In most scenarios the robot navigates safely while replanning in real time.
+          In the most challenging four-pedestrian interaction, however, rapid changes
+          in the planned trajectories can exceed the TurtleBot2’s tracking capability,
+          occasionally bringing the robot very close to nearby pedestrians.
           </p>
         </div>
       </div>  
