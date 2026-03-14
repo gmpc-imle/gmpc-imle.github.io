@@ -229,7 +229,6 @@ body {
 }
 
 .publication-video:hover {
-    transform: translateY(-4px);
     box-shadow: var(--shadow-xl);
 }
 
@@ -249,7 +248,6 @@ body {
 }
 
 .publication-body img:hover {
-  transform: translateY(-2px);
   box-shadow: var(--shadow-lg);
 }
 
@@ -755,9 +753,60 @@ a:focus {
   max-width: 260px;
   margin: 0 auto;
 }
+/* ---------- Mobile table scrolling ---------- */
+
+.mobile-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.mobile-scroll table {
+  min-width: 700px;
+}
+
+.mobile-scroll-hint {
+  display: none;
+  color: #777;
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
+}
 
 @media screen and (max-width: 768px) {
   .video-square {
     max-width: 100%;
   }
+
+  .hero-body {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .title.is-3 {
+    font-size: 1.6rem;
+  }
+
+  .title.is-4 {
+    font-size: 1.25rem;
+  }
+
+  .mobile-scroll-hint {
+    display: block;
+  }
+
+  .mobile-scroll table {
+    min-width: 640px;
+    font-size: 0.85rem;
+  }
+
+  .mobile-scroll th,
+  .mobile-scroll td {
+    white-space: nowrap;
+    padding: 0.5em 0.6em;
+  }
+
+  .table-caption {
+    font-size: 0.95rem !important;
+    padding: 0 0.5rem;
+  }
+
 }

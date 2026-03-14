@@ -12,7 +12,7 @@
   <!-- TODO: Add 5-10 relevant keywords for your research area -->
   <meta name="keywords" content="implicit maximum likelihood estimation, model predictive control, reinforcement learning, machine learning, generative models, computer vision, AI, planning">
   <!-- TODO: List all authors -->
-  <meta name="author" content=" Grayson Lee, Minh Bui, Victoria Zhou, Yankai Li, Mo Chen, Ke Li">
+  <meta name="author" content=" Grayson Lee, Minh Bui, Shuzi Zhou, Yankai Li, Mo Chen, Ke Li">
   <meta name="robots" content="index, follow">
   <meta name="language" content="English">
   
@@ -170,10 +170,10 @@
         }
       }
     ],
-    "datePublished": "2024-01-01",
+    "datePublished": "2026-03-013",
     "publisher": {
       "@type": "Organization",
-      "name": "CONFERENCE_OR_JOURNAL_NAME"
+      "name": "IEEE International Conference on Robotics and Automation (ICRA)"
     },
     "url": "https://YOUR_DOMAIN.com/YOUR_PROJECT_PAGE",
     "image": "https://YOUR_DOMAIN.com/static/images/social_preview.png",
@@ -245,54 +245,6 @@
   <button class="scroll-to-top" onclick="scrollToTop()" title="Scroll to top" aria-label="Scroll to top">
     <i class="fas fa-chevron-up"></i>
   </button>
-
-  <!-- More Works Dropdown -->
-  <!-- <div class="more-works-container">
-    <button class="more-works-btn" onclick="toggleMoreWorks()" title="View More Works from Our Lab">
-      <i class="fas fa-flask"></i>
-      More Works
-      <i class="fas fa-chevron-down dropdown-arrow"></i>
-    </button>
-    <div class="more-works-dropdown" id="moreWorksDropdown">
-      <div class="dropdown-header">
-        <h4>More Works from Our Lab</h4>
-        <button class="close-btn" onclick="toggleMoreWorks()">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-      <div class="works-list"> -->
-        <!-- TODO: Replace with your lab's related works -->
-        <!-- <a href="https://arxiv.org/abs/PAPER_ID_1" class="work-item" target="_blank">
-          <div class="work-info"> -->
-            <!-- TODO: Replace with actual paper title -->
-            <!-- <h5>Paper Title 1</h5> -->
-            <!-- TODO: Replace with brief description -->
-            <!-- <p>Brief description of the work and its main contribution.</p> -->
-            <!-- TODO: Replace with venue and year -->
-            <!-- <span class="work-venue">Conference/Journal 2024</span>
-          </div>
-          <i class="fas fa-external-link-alt"></i>
-        </a> -->
-        <!-- TODO: Add more related works or remove extra items -->
-        <!-- <a href="https://arxiv.org/abs/PAPER_ID_2" class="work-item" target="_blank">
-          <div class="work-info">
-            <h5>Paper Title 2</h5>
-            <p>Brief description of the work and its main contribution.</p>
-            <span class="work-venue">Conference/Journal 2023</span>
-          </div>
-          <i class="fas fa-external-link-alt"></i>
-        </a>
-        <a href="https://arxiv.org/abs/PAPER_ID_3" class="work-item" target="_blank">
-          <div class="work-info">
-            <h5>Paper Title 3</h5>
-            <p>Brief description of the work and its main contribution.</p>
-            <span class="work-venue">Conference/Journal 2023</span>
-          </div>
-          <i class="fas fa-external-link-alt"></i>
-        </a>
-      </div>
-    </div>
-  </div> -->
 
   <main id="main-content">
   <section class="hero">
@@ -595,8 +547,9 @@
         where \( R(\tau_i) \) is the trajectory return and \( \beta > 0 \)
         is a temperature parameter controlling how strongly the generator
         prioritizes high-value trajectories.
-        This formulation shifts probability mass toward optimal behaviors while
-        preserving multimodal coverage of feasible trajectories.
+        This formulation biases the learned trajectory distribution toward
+        higher-value behaviors, encouraging closer matching of such trajectories
+        while preserving multimodal coverage of feasible trajectories.
       </p>
 
       <p>
@@ -624,76 +577,88 @@
 <!-- Multimodal High-Reward Behavior -->
 <section class="section">
   <div class="container is-max-desktop">
-    <h1 class="title is-3 has-text-centered">Multimodal High-Reward Behavior</h1>
+    <h1 class="title is-3 has-text-centered">Multimodal Planning Behavior</h1>
 
     <div class="content">
       <p>
-        Multimodality in our planner arises naturally from the IMLE training objective.
-        Because IMLE minimizes the distance between each dataset trajectory and its nearest generated sample,
-        the generator is encouraged to cover all distinct behaviors present in the data.
-        This prevents averaging across incompatible strategies and enables the model to represent multiple
-        valid futures from the same context.
+        A key advantage of IMLE for planning is its ability to represent
+        <b>multiple valid futures</b> from the same context. Because IMLE
+        matches each dataset trajectory with its nearest generated sample,
+        the generator is encouraged to cover distinct behaviors present
+        in the data rather than averaging across them.
       </p>
 
       <p>
-        Reward weighting then reshapes this multimodal distribution without collapsing it.
-        By reweighting trajectories according to
-        \( w(\tau) = \exp(R(\tau)/\beta) \),
-        the generator shifts probability mass toward trajectories that achieve higher task value,
-        while preserving diverse high-reward strategies (e.g., different homotopy classes or avoidance maneuvers).
+        Reward weighting biases this multimodal distribution toward
+        higher-value trajectories while still preserving diverse feasible
+        strategies. As a result, the planner can represent multiple
+        high-reward solutions (e.g., different homotopy classes or
+        avoidance maneuvers) for the same situation.
       </p>
 
       <p>
-        At inference time, sampling different latent variables
-        \( z_1,\dots,z_K \)
-        produces a set of diverse candidate rollouts
-        \( \{\tau^{(k)} = f_\theta(z_k, c)\}_{k=1}^K \).
-        Model Predictive Control evaluates these candidates and selects an action,
-        enabling adaptive behavior while retaining multiple viable alternatives.
+        During planning, sampling different latent variables produces a
+        set of candidate trajectories. Model Predictive Control evaluates
+        these candidates and selects an action, enabling adaptive behavior
+        while retaining multiple viable alternatives.
       </p>
+    </div>
 
-      <!-- Optional qualitative visualization -->
-      <!--
-      <div class="has-text-centered" style="margin: 1.25rem 0;">
-        <img src="static/images/multimodal_high_reward.png"
-             alt="Multimodal high-reward trajectories"
-             style="max-width:85%; border-radius:12px;">
-        <p class="subtitle is-6" style="margin-top:0.75rem;">
-          Distinct high-value trajectory modes sampled from the reward-weighted IMLE generator under the same context.
-        </p>
+    <!-- Qualitative trajectory comparison -->
+    <div class="columns is-centered" style="margin-top:2rem">
+
+      <div class="column has-text-centered">
+        <img src="static/images/imle.png"
+             alt="IMLE trajectory distribution"
+             style="max-width:100%; border-radius:10px;">
+        <p class="subtitle is-6"><b>IMLE</b></p>
       </div>
-      -->
+
+      <div class="column has-text-centered">
+        <img src="static/images/cfm.png"
+             alt="CFM trajectory distribution"
+             style="max-width:100%; border-radius:10px;">
+        <p class="subtitle is-6"><b>CFM</b></p>
+      </div>
+
+      <div class="column has-text-centered">
+        <img src="static/images/cobl.png"
+             alt="Diffusion trajectory distribution"
+             style="max-width:100%; border-radius:10px;">
+        <p class="subtitle is-6"><b>CoBL Diffusion</b></p>
+      </div>
 
     </div>
+
+    <p class="has-text-centered" style="max-width:850px; margin:1.25rem auto;">
+      Qualitative comparison of trajectory distributions produced by different planners.
+      IMLE generates diverse but goal-directed rollouts that concentrate near feasible
+      high-value trajectories. In contrast, flow-matching and diffusion-based planners
+      exhibit greater dispersion and instability near the goal, leading to higher
+      collision rates in dynamic environments.
+    </p>
+
   </div>
 </section>
 <!-- End Multimodal High-Reward Behavior -->
-
-<!-- Youtube video -->
-<section class="hero is-small is-light">
-  <div class="hero-body">
-    <div class="container has-text-centered">
-      <!-- Paper video. -->
-      <h2 class="title is-3">Real-World Robot Deployment</h2>
-      <div class="columns is-centered has-text-centered">
-        <div class="column is-four-fifths">
-          
-          <div class="publication-video">
-            <!-- TODO: Replace with your YouTube video ID -->
-            <iframe src="https://www.youtube.com/embed/_ReOHeMiBY0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- End youtube video -->
 
 <!-- Tables Section -->
 <section class="hero is-light is-small">
   <div class="hero-body">
     <h2 class="title is-3 has-text-centered">Offline RL</h2>
     <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-four-fifths">
+          <div class="content has-text-justified">
+            <p>
+            We evaluate IMLE for offline reinforcement learning across locomotion and long-horizon
+            planning tasks. Experiments are conducted on the MuJoCo locomotion suite and Maze2D
+            benchmarks, comparing against diffusion-based planners. Results show that IMLE achieves
+            competitive performance while enabling significantly faster trajectory sampling.
+            </p>
+          </div>
+        </div>
+      </div>
       <div id="quantitative-carousel" class="carousel quantitative-carousel">
 
         <!-- Table 1: MuJoCo Locomotion -->
@@ -736,7 +701,7 @@
             </div>
 
             <p class="table-caption" style="margin-top:1em; font-size:1.05em; color:#555; text-align:center;">
-              Performance comparison across MuJoCo locomotion datasets (batch size 64).
+              Performance comparison across MuJoCo locomotion datasets (Batch Size 64).
             </p>
             <div style="height:40px"></div>
           </div>
@@ -779,7 +744,7 @@
             </div>
 
             <p class="table-caption" style="margin-top:1em; font-size:1.05em; color:#555; text-align:center;">
-              Performance comparison across Maze2D datasets (batch size 1).
+              Performance comparison across Maze2D datasets (Batch Size 1).
             </p>
             <div style="height:40px"></div>
           </div>
@@ -790,58 +755,128 @@
   </div>
 </section>
 
-<style>
-  .mobile-scroll {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
+<!-- Youtube video -->
+<section class="hero is-small is-light">
+  <div class="hero-body">
+    <div class="container has-text-centered">
+      <!-- Paper video. -->
+      <h2 class="title is-3">Real-World Robot Deployment</h2>
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-two-thirds">
+          <div class="publication-video">
+            <!-- TODO: Replace with your YouTube video ID -->
+            <iframe src="https://www.youtube.com/embed/_ReOHeMiBY0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="columns is-centered" style="margin-top:1.5rem;">
+      <div class="column is-two-thirds">
+        <div class="content has-text-justified">
+          <p>
+            The planner is trained using real world human pedestrian data (ETH and UCY) to generate socially compliant navigation behaviors.
+            We deploy the system on the Robotnik RB-1 mobile robot navigating among pedestrians in a shared indoor environment,
+            where trajectories are generated and evaluated in real time.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End youtube video -->
 
-  .mobile-scroll table {
-    min-width: 700px;
-  }
+<section class="section">
+  <div class="container is-max-desktop">
 
-  .mobile-scroll-hint {
-    display: none;
-    color: #777;
-    font-size: 0.8rem;
-    margin-bottom: 0.5rem;
-  }
+    <h2 class="title is-3 has-text-centered">Navigation Under Increased Dynamics Mismatch</h2>
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <div class="content has-text-justified">
+          <p>
+            We further evaluate the planner on a TurtleBot2 platform, which has lower maximum velocity and acceleration than the Robotnik RB-1 used above. Because the planner is trained on human trajectory data, the resulting plans can be more dynamic than the TurtleBot2 can accurately execute, introducing a larger mismatch between the planning model and the robot’s true dynamics.
+          </p>
+        </div>
+      </div>  
+    </div>
+    <div class="columns is-centered scenario-row">
+      <div class="column is-three-fifths has-text-centered">
+        <p class="subtitle is-6">Real-world navigation</p>
+      </div>
+      <div class="column is-two-fifths has-text-centered">
+        <p class="subtitle is-6">Planner rollouts</p>
+      </div>
+    </div>
+    <!-- Scenario 1 -->
+    <div class="columns is-centered scenario-row">
 
-  @media screen and (max-width: 768px) {
-    .hero-body {
-      padding-left: 1rem;
-      padding-right: 1rem;
-    }
+      <div class="column is-three-fifths has-text-centered">
+        <video controls playsinline preload="metadata">
+          <source src="static/videos/scenario1_real.mp4" type="video/mp4">
+        </video>
+        
+      </div>
 
-    .title.is-3 {
-      font-size: 1.6rem;
-    }
+      <div class="column is-two-fifths has-text-centered">
+        <video controls playsinline preload="metadata" style="width:89%; display:block; margin:auto; margin-top:-16px;">
+          <source src="static/videos/scenario1_render.mp4" type="video/mp4">
+        </video>
+      </div>
 
-    .title.is-4 {
-      font-size: 1.25rem;
-    }
+    </div>
 
-    .mobile-scroll-hint {
-      display: block;
-    }
+    <!-- Scenario 2 -->
+    <div class="columns is-centered scenario-row">
 
-    .mobile-scroll table {
-      min-width: 640px;
-      font-size: 0.85rem;
-    }
+      <div class="column is-three-fifths has-text-centered">
+        <video controls playsinline preload="metadata">
+          <source src="static/videos/scenario2_real.mp4" type="video/mp4">
+        </video>
+      </div>
 
-    .mobile-scroll th,
-    .mobile-scroll td {
-      white-space: nowrap;
-      padding: 0.5em 0.6em;
-    }
+      <div class="column is-two-fifths has-text-centered">
+        <video controls playsinline preload="metadata" style="width:89%; display:block; margin:auto; margin-top:-16px;">
+          <source src="static/videos/scenario2_render.mp4" type="video/mp4">
+        </video>
+      </div>
 
-    .table-caption {
-      font-size: 0.95rem !important;
-      padding: 0 0.5rem;
-    }
-  }
-</style>
+    </div>
+
+    <!-- Scenario 3 -->
+    <div class="columns is-centered scenario-row">
+
+      <div class="column is-three-fifths has-text-centered">
+        <video controls playsinline preload="metadata">
+          <source src="static/videos/scenario3_real.mp4" type="video/mp4">
+        </video>
+      </div>
+
+      <div class="column is-two-fifths has-text-centered">
+        <video controls playsinline preload="metadata" style="width:89%; display:block; margin:auto; margin-top:-16px;">
+          <source src="static/videos/scenario3_render.mp4" type="video/mp4">
+        </video>
+      </div>
+
+    </div>
+
+    <!-- Scenario 4 -->
+    <div class="columns is-centered scenario-row">
+
+      <div class="column is-three-fifths has-text-centered">
+        <video controls playsinline preload="metadata">
+          <source src="static/videos/scenario4_real.mp4" type="video/mp4">
+        </video>
+      </div>
+
+      <div class="column is-two-fifths has-text-centered">
+        <video controls playsinline preload="metadata" style="width:89%; display:block; margin:auto; margin-top:-16px;">
+          <source src="static/videos/scenario4_render.mp4" type="video/mp4">
+        </video>
+      </div>
+
+    </div>
+
+  </div>
+</section>
 
 
 <!--BibTex citation -->
